@@ -20,6 +20,7 @@ from src.data.clean_utils import (
     lattice_constants_clean,
     isotopic_clean,
 )
+from src.data.download_data import save_as_csv
 
 
 def clean_periodic_table_df(periodic_table_df):
@@ -137,9 +138,12 @@ if __name__ == '__main__':
     file_path = os.path.dirname(os.path.abspath(__file__))
     general_path = os.path.join(file_path, '..', '../')
     data_raw_path = os.path.join(general_path, 'data', 'raw')
+    data_interim_path = os.path.join(general_path,'data', 'interim')
     data_raw_filename = os.path.join(data_raw_path, 'data.csv')
+    data_interim_filename = os.path.join(data_interim_path, 'clean_data.csv')
     periodic_table_df = pd.read_csv(
         data_raw_filename,
         index_col=0,
         keep_default_na=False)
-    clean_periodic_table_df(periodic_table_df)
+    cleaned_data = clean_periodic_table_df(periodic_table_df)
+    save_as_csv(data_interim_filename, cleaned_data)

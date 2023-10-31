@@ -58,4 +58,3 @@ if __name__ == '__main__':
         periodic_table_dict=periodic_table_dict
     )
     save_as_csv(data_raw_filename, data)
-
