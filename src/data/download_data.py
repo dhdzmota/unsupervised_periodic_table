@@ -47,6 +47,15 @@ def save_as_csv(path, df):
     df.to_csv(path)
 
 
+def read_data_as_csv(path, keep_na=False):
+    df = pd.read_csv(
+        path,
+        index_col=0,
+        keep_default_na=keep_na
+    )
+    return df
+
+
 if __name__ == '__main__':
     file_path = os.path.dirname(os.path.abspath(__file__))
     general_path = os.path.join(file_path, '..', '../')
