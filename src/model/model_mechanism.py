@@ -9,7 +9,9 @@ from src.model.model_utils import (
     obtain_exploded_df_from_results,
     create_graph_from_exploded_results,
     get_communities_with_weight,
-    explainability
+    explainability,
+    plot_individual_communities,
+    save_entity_as_pickle
 )
 
 
@@ -49,11 +51,11 @@ if __name__ == '__main__':
         exploded_results=elemental_results_relations,
         column_from='AtomicNumber', column_to='relations'
     )
-
     classifications = get_communities_with_weight(G, weight='distances')
-    # TODO: get classification images
+    plot_individual_communities(G, classifications)
 
     explainability(transformed_pt, classifications)
-    print(classifications)
-    # TODO: get shap images
-    # TODO: Save entities: G, classifications, SOM
+
+    save_entity_as_pickle(G, 'network')
+    save_entity_as_pickle(classifications, 'classifications')
+    save_entity_as_pickle(som, 'som')

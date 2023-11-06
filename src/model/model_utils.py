@@ -1,9 +1,10 @@
-import pandas as pd
-import numpy as np
-import shap
 import matplotlib.pyplot as plt
 import networkx as nx
-
+import numpy as np
+import os
+import pandas as pd
+import pickle
+import shap
 
 from minisom import MiniSom as SOM
 from sklearn.ensemble import RandomForestClassifier
@@ -105,22 +106,30 @@ def get_communities_with_weight(G, weight):
 
 
 def plot_individual_communities(G, communities):
-    for c in communities:
+    zfill_val = len(str(len(communities)))
+    for i, c in enumerate(communities):
         sG = G.subgraph(c)
         pos = nx.kamada_kawai_layout(sG)
         nx.draw_networkx_nodes(sG, pos=pos, node_size=250, node_color='r')
         nx.draw_networkx_edges(sG, pos=pos, node_size=250)
         nx.draw_networkx_labels(sG, pos=pos, font_size=10)
         plt.title(
-            f'Network Representation for the following atomic numbers: {c}'
+            f'Network Representation for the following'
+            f' atomic numbers:\n {list(c)}'
         )
-        plt.show()
+        path = get_expected_basepath('results')
+        name = f'classification_{str(i).zfill(zfill_val)}.png'
+        filepath = os.path.join(path, name)
+        plt.savefig(filepath)
+        plt.close()
 
 
-def explainability(df, classifications):
+def explainability(df, classifications, plot=True):
+    class_group_dict = {}
     for idx, class_group in enumerate(classifications):
         try:
             df.loc[class_group, 'class_group'] = idx
+            class_group_dict[idx] = list(class_group)
         except KeyError:
             pass
 
@@ -129,6 +138,36 @@ def explainability(df, classifications):
     model.fit(x, y)
     explainer = shap.TreeExplainer(model)
 
+    zfill_val = len(str(y.nunique()))
     for nb in sorted(y.unique()):
         shap_values = explainer.shap_values(x)[int(nb)]
+        plt.title(f'Most important features with corresponding '
+                  f'shap_values for\n'
+                  f'the following atomic numbers: \n {class_group_dict[nb]}')
         shap.summary_plot(shap_values, x, max_display=5, show=False)
+
+        if plot:
+            path = get_expected_basepath('results')
+            name = f'shap_classification_{str(nb).zfill(zfill_val)}.png'
+            filepath = os.path.join(path, name)
+            plt.savefig(filepath)
+            plt.close()
+
+
+def get_general_path():
+    file_path = os.path.dirname(os.path.abspath(__file__))
+    general_path = os.path.join(file_path, '..', '../')
+    return general_path
+
+
+def get_expected_basepath(expected_path):
+    general_path = get_general_path()
+    path = os.path.join(general_path, expected_path)
+    return path
+
+
+def save_entity_as_pickle(entity, name):
+    models_path = get_expected_basepath('models')
+    entity_path = os.path.join(models_path, name)
+    with open(f'{entity_path}.pkl', 'wb') as file:
+        pickle.dump(entity, file)
