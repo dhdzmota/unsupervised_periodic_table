@@ -13,21 +13,21 @@ Project Organization
     │   ├── interim        <- Data transformed but not as a final step.
     │   └── processed      <- Data used to train the final model. 
     │
-    ├── figures            <- Folder with the images relevant to the challenge.
-    │
-    ├── models             <- Folder with the models.
+    ├── models             <- Folder with the models and relevant information.
     │
     ├── notebooks          <- Contains jupyter notebooks or related files.
-    │   ├── EDA.ipynb              <- Initial EDA for the data. 
-    │   └── model_test.ipynb       <- Jupyter tests for models.
     │
     ├── references         <- Information relevant to the project context.
     │
+    ├── results            <- Folder with the obtained results.
+    │
     ├── src                <- Python code to run this project (main package).
     │   ├── data           <- Scripts for data read and transformations. 
-    │   └── model          <- Scripts for ML pipeline.
+    │   └── model          <- Scripts for ML workflow.
     │
-    ├── general_pipeline.py        <- Steps to run and create a model.
+    ├── general_pipeline.py  <- Steps to run and execute the main task of this
+    │                           repo from data download to process and creation
+    │                           of a model with corresponding results.
     │
     ├── setup.py           <- Makes project pip installable.
     │
