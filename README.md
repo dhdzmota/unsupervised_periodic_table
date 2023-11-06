@@ -40,10 +40,10 @@ Data
 The data of this analysis is obtained from the 
 [PubChem webpage](https://pubchem.ncbi.nlm.nih.gov/periodic-table/), 
 which is an official website of the United States government. In this cite,
-one can find structured and machine-readable information on the Chemical Group Block, Atomic Mass, 
-Standard State, Electronic Configuation, among other relevant fields 
-(just to name a fiew). The next figure shows an example on the information that
-the periodic table of this cite could contain.
+one can find structured and machine-readable information on the Chemical Group 
+Block, Atomic Mass, Standard State, Electronic Configuation, among other 
+relevant fields (just to name a fiew). The next figure shows an example on the 
+information that the periodic table of this cite could contain.
 
 
 ![Periodic_Table_of_Elements_w_Names_PubChem.png](references%2FPeriodic_Table_of_Elements_w_Names_PubChem.png)
